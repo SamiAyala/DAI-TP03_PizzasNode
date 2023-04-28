@@ -1,0 +1,28 @@
+{
+  "name": "dai-tp03_pizzasnode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "middleware": "node sample-middleware.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamiAyala/DAI-TP03_PizzasNode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SamiAyala/DAI-TP03_PizzasNode/issues"
+  },
+  "homepage": "https://github.com/SamiAyala/DAI-TP03_PizzasNode#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "env": "^0.0.2",
+    "express": "^4.18.2",
+    "mssql": "^9.1.1"
+  }
+}
