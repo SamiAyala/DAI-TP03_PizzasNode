@@ -1,17 +1,15 @@
-import sql from 'mssql';
 import config from './dbconfig.js';
-
-export class PizzaService {
+import sql from 'mssql';
+export class PizzaServices {
 
     static getAll = async () => {
         let returnEntity = null;
-        console.log("Estoy en: PizzaService.GetAll()");
+        console.log("Estoy en: GetAll");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .input("pId", sql.Int, id)
                 .query("SELECT * FROM Pizzas");
-            returnEntity = result.recordsets[0][0];
+            returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
         }
@@ -20,7 +18,7 @@ export class PizzaService {
 
     static getById = async (id) => {
         let returnEntity = null;
-        console.log("Estoy en: PizzaService.GetById(id)");
+        console.log("Estoy en: GetById");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
@@ -34,44 +32,47 @@ export class PizzaService {
     }
 
     static insert = async (pizza) =>{
-            const {nombre,libreGluten,importe,descripcion} = pizza
+        console.log("Estoy en: insert");
+            const {Nombre,LibreGluten,Importe,Descripcion} = pizza
             let pool = await sql.connect(config)
-            const request = new sql.Request(pool);
     
-            request.
-            input('Nombre',sql.NVarChar(50),nombre)
-            input('LibreGluten',sql.Bit,libreGluten)
-            input('Importe',sql.Money,importe)
-            input('Descripcion',sql.NVarChar(200),descripcion)
+            let result = await pool.request()
+            .input('nombre',sql.NVarChar(50),Nombre)
+            .input('libreGluten',sql.Bit,LibreGluten)
+            .input('importe',sql.Int,Importe)
+            .input('descripcion',sql.NVarChar(200),Descripcion)
             .query('INSERT INTO Pizzas (nombre,libreGluten,importe,descripcion) VALUES (@nombre, @libreGluten,@importe,@descripcion)')
     }
 
-    static update = async (pizza) =>{
-        const {nombre,libreGluten,importe,descripcion} = pizza
+        static update = async (id, importe) =>{
+        let returnEntity = null;
+        console.log("Estoy en: update");
+        try{
             let pool = await sql.connect(config)
-            const request = new sql.Request(pool);
-    
-            request.
-            input('Nombre',sql.NVarChar(50),nombre)
-            input('LibreGluten',sql.Bit,libreGluten)
-            input('Importe',sql.Money,importe)
-            input('Descripcion',sql.NVarChar(200),descripcion)
-            .query('UPDATE Pizzas SET Importe = @pImporte WHERE Pizzas.id = @pId')
-    }
+            let result = await pool.request()
+            .input('Importe',sql.Int,importe)
+            .input('pId',sql.Int,id)
+            .query('UPDATE Pizzas SET Importe = @Importe WHERE Pizzas.id = @pId')
+            returnEntity = result.recordsets[0];
+        } catch (error){
+            console.log(error);
+        }
+            return returnEntity;
+        }
 
 
     static deleteById = async (id) => {
         let returnEntity = null;
-        console.log("Estoy en: PizzaService.DeleteById(id)");
+        console.log("Estoy en: delete");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input("pId", sql.Int, id)
                 .query("Delete FROM Pizzas WHERE id = @pId");
-            returnEntity = result.recordsets[0][0];
+            returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
         }
-        return returnEntity
+        return returnEntity;
     }
 }
