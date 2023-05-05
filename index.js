@@ -32,9 +32,9 @@ app.post('/pizza/post', async(req,res) =>{
     }
 })
 
-app.put('/pizza/put/:id/:importe',async(req,res) => {
-    const pizza = await PizzaServices.update(req.params.id, req.params.importe)
-    res.status(202).send(pizza)
+app.put('/pizza/put',async(req,res) => {
+    let pizza = await PizzaServices.update(req.body);
+    res.status(202).send(pizza);
 })
 
 app.listen(port,() =>{

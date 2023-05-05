@@ -44,15 +44,19 @@ export class PizzaServices {
             .query('INSERT INTO Pizzas (nombre,libreGluten,importe,descripcion) VALUES (@nombre, @libreGluten,@importe,@descripcion)')
     }
 
-        static update = async (id, importe) =>{
+        static update = async (pizza) =>{
+        const {Id, Nombre,LibreGluten,Importe,Descripcion} = pizza
         let returnEntity = null;
         console.log("Estoy en: update");
         try{
             let pool = await sql.connect(config)
             let result = await pool.request()
-            .input('Importe',sql.Int,importe)
-            .input('pId',sql.Int,id)
-            .query('UPDATE Pizzas SET Importe = @Importe WHERE Pizzas.id = @pId')
+            .input('pId',sql.Int,Id)
+            .input('Nombre',sql.NVarChar(50),Nombre)
+            .input('LibreGluten',sql.Bit,LibreGluten)
+            .input('Importe',sql.Int,Importe)
+            .input('Descripcion',sql.NVarChar(200),Descripcion)
+            .query('UPDATE Pizzas SET Nombre = @Nombre, LibreGluten = @LibreGluten, Importe = @Importe, Descripcion = @Descripcion  WHERE Pizzas.id = @pId')
             returnEntity = result.recordsets[0];
         } catch (error){
             console.log(error);
