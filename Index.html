@@ -9,19 +9,16 @@
     <title>Lista de Pizzas</title>
 </head>
 <body onload="getAllPizzas()">
-    <h1>Bienvenido a la lista de Pizzas</h1>
-    <form class="form-inline my-2 my-lg-0">
-        <div class="row">
-            <div class="col-md-12">
-    </form>
-    <table class="table">
+    <h1>🍕Bienvenido a la lista de Pizzas🍕</h1>
+    <input type="search" class="form-control" placeholder="Type Here To Search" id="inp" onkeyup="searchFunction()">
+    <table id="table" class="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">Importe</th>
             <th scope="col">Descripcion</th>
-            <th scope="col">¿?</th>
+            <th scope="col">Libre de Gluten?</th>
           </tr>
         </thead>
         <tbody id="tablaPizzas">
